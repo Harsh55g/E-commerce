@@ -142,7 +142,8 @@
 
             // --- THIS IS THE CONNECTION POINT ---
             // This URL points directly to your backend server.
-            const API_BASE_URL = 'http://localhost:3001';
+            // Supports environment variable configuration for flexible deployment
+            const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://luxemodes.onrender.com';
 
             // --- DOM Element Selectors ---
             const productGrid = document.getElementById('product-grid');
@@ -181,7 +182,7 @@
                     return await response.json();
                 } catch (error) {
                     console.error("--- FETCH FAILED ---");
-                    console.error("Could not connect to the backend server. Please ensure the server is running on http://localhost:3001.");
+                    console.error("Could not connect to the backend server. Please ensure the server is running on https://luxemodes.onrender.com.");
                     console.error("Displaying fallback data for demonstration purposes.", error);
                     
                     const shopSection = document.getElementById('shop');
@@ -190,14 +191,13 @@
                          const errorHTML = `
                             <div id="fetch-error" class="container mx-auto px-6 mb-8 text-left bg-red-100 border-l-4 border-red-500 text-red-800 p-4" role="alert">
                                 <p class="font-bold text-lg">Backend Not Connected</p>
-                                <p>The website couldn't connect to the local server. To fix this, please follow these steps:</p>
-                                <ol class="list-decimal list-inside mt-2 font-mono bg-red-50 p-3 rounded text-sm">
-                                    <li>Open a new terminal or command prompt.</li>
-                                    <li>Navigate to your <strong>luxemodes-backend</strong> folder.</li>
-                                    <li>Run the command: <strong>npm install</strong> (you only need to do this once)</li>
-                                    <li>Then, run the command: <strong>npm start</strong></li>
-                                </ol>
-                                <p class="mt-2">The page is currently showing static fallback data. Once the server is running, please <strong>refresh this page</strong>.</p>
+                                <p>The website couldn't connect to the deployed backend at <strong>https://luxemodes.onrender.com</strong>. This could be due to:</p>
+                                <ul class="list-disc list-inside mt-2 text-sm">
+                                    <li>The backend service is temporarily unavailable</li>
+                                    <li>Network connectivity issues</li>
+                                    <li>The backend URL has changed</li>
+                                </ul>
+                                <p class="mt-2">The page is currently showing static fallback data. Please <strong>refresh this page</strong> or check back later.</p>
                             </div>`;
                          shopSection.insertAdjacentHTML('afterbegin', errorHTML);
                     }
