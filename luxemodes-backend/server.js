@@ -8,7 +8,17 @@ const PORT = process.env.PORT || 3001; // The port the server will run on
 
 // Middleware
 // Enable Cross-Origin Resource Sharing (CORS) so your frontend can communicate with this backend
-app.use(cors()); 
+app.use(cors({
+  origin: [
+    'https://transcendent-bubblegum-74b190.netlify.app',
+    'http://localhost:3000',
+    'http://localhost:8080',
+    'http://127.0.0.1:5500'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+  optionsSuccessStatus: 200
+})); 
 // Enable the server to parse JSON formatted request bodies
 app.use(express.json()); 
 
