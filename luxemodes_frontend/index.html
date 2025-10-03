@@ -117,7 +117,7 @@
                     <span class="text-lg font-semibold">Subtotal</span>
                     <span id="subtotal" class="text-lg font-bold">$0.00</span>
                 </div>
-                <button class="w-full bg-black text-white py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors">Checkout</button>
+                <button id="checkout-btn" class="w-full bg-black text-white py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors">Checkout</button>
             </div>
         </div>
     </div>
@@ -132,6 +132,197 @@
         </div>
     </div>
 
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-6xl max-h-[90vh] overflow-hidden relative">
+            <button id="close-checkout" class="absolute top-4 right-4 text-2xl hover:text-red-500 z-10">&times;</button>
+            
+            <!-- Checkout Steps Navigation -->
+            <div class="flex border-b bg-gray-50">
+                <div class="flex-1 px-6 py-4 text-center border-r">
+                    <div id="step-1-indicator" class="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-2 text-sm font-bold">1</div>
+                    <span class="text-sm font-medium">Address</span>
+                </div>
+                <div class="flex-1 px-6 py-4 text-center border-r">
+                    <div id="step-2-indicator" class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center mx-auto mb-2 text-sm font-bold">2</div>
+                    <span class="text-sm font-medium text-gray-600">Payment</span>
+                </div>
+                <div class="flex-1 px-6 py-4 text-center">
+                    <div id="step-3-indicator" class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center mx-auto mb-2 text-sm font-bold">3</div>
+                    <span class="text-sm font-medium text-gray-600">Summary</span>
+                </div>
+            </div>
+
+            <div class="flex h-96">
+                <!-- Left Panel - Forms -->
+                <div class="flex-1 p-6 overflow-y-auto">
+                    <!-- Step 1: Address Form -->
+                    <div id="checkout-step-1" class="checkout-step">
+                        <h3 class="text-xl font-bold mb-6">Delivery Address</h3>
+                        <form id="address-form" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">First Name *</label>
+                                    <input type="text" name="firstName" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Last Name *</label>
+                                    <input type="text" name="lastName" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Mobile Number *</label>
+                                <input type="tel" name="mobile" required pattern="[0-9]{10}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Address Line 1 *</label>
+                                <input type="text" name="address1" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Address Line 2</label>
+                                <input type="text" name="address2" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">City *</label>
+                                    <input type="text" name="city" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">State *</label>
+                                    <input type="text" name="state" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Pincode *</label>
+                                    <input type="text" name="pincode" required pattern="[0-9]{6}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                                </div>
+                            </div>
+                            <button type="button" id="address-next" class="w-full bg-black text-white py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors">Continue to Payment</button>
+                        </form>
+                    </div>
+
+                    <!-- Step 2: Payment Form -->
+                    <div id="checkout-step-2" class="checkout-step hidden">
+                        <h3 class="text-xl font-bold mb-6">Payment Method</h3>
+                        <div class="space-y-4">
+                            <!-- Payment Options -->
+                            <div class="border border-gray-200 rounded-lg p-4 cursor-pointer payment-option" data-payment="card">
+                                <div class="flex items-center">
+                                    <input type="radio" name="payment" value="card" class="mr-3">
+                                    <i class="fas fa-credit-card text-xl mr-3"></i>
+                                    <div>
+                                        <div class="font-medium">Credit/Debit Card</div>
+                                        <div class="text-sm text-gray-600">Visa, MasterCard, RuPay</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-4 cursor-pointer payment-option" data-payment="upi">
+                                <div class="flex items-center">
+                                    <input type="radio" name="payment" value="upi" class="mr-3">
+                                    <i class="fas fa-mobile-alt text-xl mr-3"></i>
+                                    <div>
+                                        <div class="font-medium">UPI</div>
+                                        <div class="text-sm text-gray-600">Google Pay, PhonePe, Paytm</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-4 cursor-pointer payment-option" data-payment="netbanking">
+                                <div class="flex items-center">
+                                    <input type="radio" name="payment" value="netbanking" class="mr-3">
+                                    <i class="fas fa-university text-xl mr-3"></i>
+                                    <div>
+                                        <div class="font-medium">Net Banking</div>
+                                        <div class="text-sm text-gray-600">All major banks</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-4 cursor-pointer payment-option" data-payment="cod">
+                                <div class="flex items-center">
+                                    <input type="radio" name="payment" value="cod" class="mr-3">
+                                    <i class="fas fa-money-bill-wave text-xl mr-3"></i>
+                                    <div>
+                                        <div class="font-medium">Cash on Delivery</div>
+                                        <div class="text-sm text-gray-600">Pay when you receive</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Details (shown when card is selected) -->
+                        <div id="card-details" class="mt-6 hidden">
+                            <h4 class="font-medium mb-4">Card Details</h4>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Card Number *</label>
+                                    <input type="text" name="cardNumber" placeholder="1234 5678 9012 3456" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Expiry Date *</label>
+                                        <input type="text" name="expiry" placeholder="MM/YY" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">CVV *</label>
+                                        <input type="text" name="cvv" placeholder="123" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Cardholder Name *</label>
+                                    <input type="text" name="cardholderName" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 mt-6">
+                            <button type="button" id="payment-back" class="flex-1 bg-gray-300 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-400 transition-colors">Back</button>
+                            <button type="button" id="payment-next" class="flex-1 bg-black text-white py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors">Review Order</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Order Summary -->
+                    <div id="checkout-step-3" class="checkout-step hidden">
+                        <h3 class="text-xl font-bold mb-6">Order Summary</h3>
+                        <div class="space-y-4">
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-medium mb-2">Delivery Address</h4>
+                                <div id="summary-address" class="text-sm text-gray-600"></div>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <h4 class="font-medium mb-2">Payment Method</h4>
+                                <div id="summary-payment" class="text-sm text-gray-600"></div>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 mt-6">
+                            <button type="button" id="summary-back" class="flex-1 bg-gray-300 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-400 transition-colors">Back</button>
+                            <button type="button" id="place-order" class="flex-1 bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700 transition-colors">Place Order</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel - Order Summary -->
+                <div class="w-80 bg-gray-50 p-6 border-l">
+                    <h3 class="text-lg font-bold mb-4">Order Summary</h3>
+                    <div id="checkout-items" class="space-y-3 mb-4">
+                        <!-- Items will be dynamically inserted here -->
+                    </div>
+                    <div class="border-t pt-4 space-y-2">
+                        <div class="flex justify-between">
+                            <span>Subtotal</span>
+                            <span id="checkout-subtotal">$0.00</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Delivery</span>
+                            <span class="text-green-600">FREE</span>
+                        </div>
+                        <div class="flex justify-between font-bold text-lg border-t pt-2">
+                            <span>Total</span>
+                            <span id="checkout-total">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript Logic -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -142,7 +333,7 @@
 
             // --- THIS IS THE CONNECTION POINT ---
             // This URL points directly to your backend server.
-            const API_BASE_URL = 'http://localhost:3001';
+            const API_BASE_URL = 'http://localhost:3000';
 
             // --- DOM Element Selectors ---
             const productGrid = document.getElementById('product-grid');
@@ -165,6 +356,7 @@
                 { id: 2, name: "Denim Jacket (Fallback)", price: 120.00, image: "https://placehold.co/600x600/e0e0e0/1a1a1a?text=Jacket", category: "Outerwear", description: "This is fallback data. Start the backend server to see live product information.", colors: ["Vintage Blue"], sizes: ["S", "M", "L"] },
                 { id: 3, name: "Slim-Fit Chinos (Fallback)", price: 75.00, image: "https://placehold.co/600x600/f5f5f5/1a1a1a?text=Chinos", category: "Bottoms", description: "This is fallback data. Start the backend server to see live product information.", colors: ["Khaki", "Navy"], sizes: ["30x30", "32x32"] },
                 { id: 4, name: "Merino Sweater (Fallback)", price: 95.00, image: "https://placehold.co/600x600/fafafa/1a1a1a?text=Sweater", category: "Tops", description: "This is fallback data. Start the backend server to see live product information.", colors: ["Charcoal"], sizes: ["M", "L", "XL"] },
+                { id: 7, name: "Performance Gym Fit (Fallback)", price: 65.00, image: "https://placehold.co/600x600/2c2c2c/ffffff?text=Gym+Fit", category: "Athletic", description: "This is fallback data. Start the backend server to see live product information.", colors: ["Black", "Navy"], sizes: ["S", "M", "L"] },
             ];
 
             // --- Data Fetching ---
@@ -181,7 +373,7 @@
                     return await response.json();
                 } catch (error) {
                     console.error("--- FETCH FAILED ---");
-                    console.error("Could not connect to the backend server. Please ensure the server is running on http://localhost:3001.");
+                    console.error("Could not connect to the backend server. Please ensure the server is running on https://luxemodes.onrender.com.");
                     console.error("Displaying fallback data for demonstration purposes.", error);
                     
                     const shopSection = document.getElementById('shop');
@@ -190,14 +382,13 @@
                          const errorHTML = `
                             <div id="fetch-error" class="container mx-auto px-6 mb-8 text-left bg-red-100 border-l-4 border-red-500 text-red-800 p-4" role="alert">
                                 <p class="font-bold text-lg">Backend Not Connected</p>
-                                <p>The website couldn't connect to the local server. To fix this, please follow these steps:</p>
-                                <ol class="list-decimal list-inside mt-2 font-mono bg-red-50 p-3 rounded text-sm">
-                                    <li>Open a new terminal or command prompt.</li>
-                                    <li>Navigate to your <strong>luxemodes-backend</strong> folder.</li>
-                                    <li>Run the command: <strong>npm install</strong> (you only need to do this once)</li>
-                                    <li>Then, run the command: <strong>npm start</strong></li>
-                                </ol>
-                                <p class="mt-2">The page is currently showing static fallback data. Once the server is running, please <strong>refresh this page</strong>.</p>
+                                <p>The website couldn't connect to the deployed backend at <strong>https://luxemodes.onrender.com</strong>. This could be due to:</p>
+                                <ul class="list-disc list-inside mt-2 text-sm">
+                                    <li>The backend service is temporarily unavailable</li>
+                                    <li>Network connectivity issues</li>
+                                    <li>The backend URL has changed</li>
+                                </ul>
+                                <p class="mt-2">The page is currently showing static fallback data. Please <strong>refresh this page</strong> or check back later.</p>
                             </div>`;
                          shopSection.insertAdjacentHTML('afterbegin', errorHTML);
                     }
@@ -387,6 +578,296 @@
                     }
                 });
             }
+
+            // --- Checkout Functionality ---
+            let currentCheckoutStep = 1;
+            let checkoutData = {};
+
+            const checkoutModal = document.getElementById('checkout-modal');
+            const closeCheckoutBtn = document.getElementById('close-checkout');
+            const checkoutBtn = document.getElementById('checkout-btn');
+
+            // Checkout step management
+            function showCheckoutStep(step) {
+                // Hide all steps
+                document.querySelectorAll('.checkout-step').forEach(s => s.classList.add('hidden'));
+                
+                // Show current step
+                document.getElementById(`checkout-step-${step}`).classList.remove('hidden');
+                
+                // Update step indicators
+                for (let i = 1; i <= 3; i++) {
+                    const indicator = document.getElementById(`step-${i}-indicator`);
+                    const label = indicator.nextElementSibling;
+                    
+                    if (i <= step) {
+                        indicator.className = 'w-8 h-8 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-2 text-sm font-bold';
+                        label.className = 'text-sm font-medium';
+                    } else {
+                        indicator.className = 'w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center mx-auto mb-2 text-sm font-bold';
+                        label.className = 'text-sm font-medium text-gray-600';
+                    }
+                }
+                
+                currentCheckoutStep = step;
+            }
+
+            // Toggle checkout modal
+            function toggleCheckoutModal() {
+                checkoutModal.classList.toggle('hidden');
+                checkoutModal.classList.toggle('flex');
+                
+                if (!checkoutModal.classList.contains('hidden')) {
+                    // Initialize checkout
+                    currentCheckoutStep = 1;
+                    showCheckoutStep(1);
+                    updateCheckoutSummary();
+                }
+            }
+
+            // Update checkout summary
+            function updateCheckoutSummary() {
+                const checkoutItems = document.getElementById('checkout-items');
+                const checkoutSubtotal = document.getElementById('checkout-subtotal');
+                const checkoutTotal = document.getElementById('checkout-total');
+                
+                checkoutItems.innerHTML = '';
+                let subtotal = 0;
+                
+                state.cart.forEach(item => {
+                    subtotal += item.price * item.quantity;
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'flex justify-between items-center text-sm';
+                    itemDiv.innerHTML = `
+                        <div>
+                            <div class="font-medium">${item.name}</div>
+                            <div class="text-gray-600">${item.size} / ${item.color} × ${item.quantity}</div>
+                        </div>
+                        <div class="font-medium">$${(item.price * item.quantity).toFixed(2)}</div>
+                    `;
+                    checkoutItems.appendChild(itemDiv);
+                });
+                
+                checkoutSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+                checkoutTotal.textContent = `$${subtotal.toFixed(2)}`;
+            }
+
+            // Address form validation
+            function validateAddressForm() {
+                const form = document.getElementById('address-form');
+                const inputs = form.querySelectorAll('input[required]');
+                let isValid = true;
+                
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        isValid = false;
+                        input.classList.add('border-red-500');
+                    } else {
+                        input.classList.remove('border-red-500');
+                    }
+                });
+                
+                return isValid;
+            }
+
+            // Payment option selection
+            function setupPaymentOptions() {
+                const paymentOptions = document.querySelectorAll('.payment-option');
+                const cardDetails = document.getElementById('card-details');
+                
+                paymentOptions.forEach(option => {
+                    option.addEventListener('click', () => {
+                        // Uncheck all radio buttons
+                        document.querySelectorAll('input[name="payment"]').forEach(radio => {
+                            radio.checked = false;
+                        });
+                        
+                        // Check the clicked option's radio button
+                        const radio = option.querySelector('input[name="payment"]');
+                        radio.checked = true;
+                        
+                        // Show/hide card details based on selection
+                        if (radio.value === 'card') {
+                            cardDetails.classList.remove('hidden');
+                        } else {
+                            cardDetails.classList.add('hidden');
+                        }
+                        
+                        // Visual feedback
+                        paymentOptions.forEach(opt => opt.classList.remove('border-black', 'bg-gray-50'));
+                        option.classList.add('border-black', 'bg-gray-50');
+                    });
+                });
+            }
+
+            // Event listeners for checkout
+            checkoutBtn.addEventListener('click', () => {
+                if (state.cart.length === 0) {
+                    alert('Your cart is empty!');
+                    return;
+                }
+                toggleCart(); // Close cart first
+                toggleCheckoutModal();
+            });
+
+            closeCheckoutBtn.addEventListener('click', toggleCheckoutModal);
+
+            // Address form next button
+            document.getElementById('address-next').addEventListener('click', () => {
+                if (validateAddressForm()) {
+                    // Store address data
+                    const formData = new FormData(document.getElementById('address-form'));
+                    checkoutData.address = Object.fromEntries(formData);
+                    showCheckoutStep(2);
+                } else {
+                    alert('Please fill in all required fields.');
+                }
+            });
+
+            // Payment back button
+            document.getElementById('payment-back').addEventListener('click', () => {
+                showCheckoutStep(1);
+            });
+
+            // Payment next button
+            document.getElementById('payment-next').addEventListener('click', () => {
+                const selectedPayment = document.querySelector('input[name="payment"]:checked');
+                if (!selectedPayment) {
+                    alert('Please select a payment method.');
+                    return;
+                }
+                
+                // Store payment data
+                checkoutData.payment = selectedPayment.value;
+                
+                if (selectedPayment.value === 'card') {
+                    // Validate card details
+                    const cardNumber = document.querySelector('input[name="cardNumber"]').value;
+                    const expiry = document.querySelector('input[name="expiry"]').value;
+                    const cvv = document.querySelector('input[name="cvv"]').value;
+                    const cardholderName = document.querySelector('input[name="cardholderName"]').value;
+                    
+                    if (!cardNumber || !expiry || !cvv || !cardholderName) {
+                        alert('Please fill in all card details.');
+                        return;
+                    }
+                    
+                    checkoutData.cardDetails = { cardNumber, expiry, cvv, cardholderName };
+                }
+                
+                // Update summary
+                updateOrderSummary();
+                showCheckoutStep(3);
+            });
+
+            // Summary back button
+            document.getElementById('summary-back').addEventListener('click', () => {
+                showCheckoutStep(2);
+            });
+
+            // Place order button
+            document.getElementById('place-order').addEventListener('click', async () => {
+                try {
+                    // Prepare order data
+                    const orderData = {
+                        customer: {
+                            firstName: checkoutData.address.firstName,
+                            lastName: checkoutData.address.lastName,
+                            mobile: checkoutData.address.mobile
+                        },
+                        address: {
+                            address1: checkoutData.address.address1,
+                            address2: checkoutData.address.address2 || '',
+                            city: checkoutData.address.city,
+                            state: checkoutData.address.state,
+                            pincode: checkoutData.address.pincode
+                        },
+                        items: state.cart.map(item => ({
+                            productId: item.id,
+                            name: item.name,
+                            price: item.price,
+                            quantity: item.quantity,
+                            size: item.size,
+                            color: item.color,
+                            image: item.image
+                        })),
+                        payment: {
+                            method: checkoutData.payment,
+                            status: 'pending',
+                            cardDetails: checkoutData.cardDetails || null
+                        },
+                        pricing: {
+                            subtotal: state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                            delivery: 0,
+                            total: state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)
+                        }
+                    };
+
+                    // Send order to backend
+                    const response = await fetch(`${API_BASE_URL}/api/orders`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(orderData)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        // Order placed successfully
+                        alert(`Order placed successfully! Order ID: #${result.orderId}`);
+                        
+                        // Clear cart
+                        state.cart = [];
+                        updateCart();
+                        
+                        // Close checkout modal
+                        toggleCheckoutModal();
+                        
+                        // Reset checkout data
+                        checkoutData = {};
+                    } else {
+                        throw new Error(result.message || 'Failed to place order');
+                    }
+                } catch (error) {
+                    console.error('Error placing order:', error);
+                    alert('Failed to place order. Please try again.');
+                }
+            });
+
+            // Update order summary for final step
+            function updateOrderSummary() {
+                const summaryAddress = document.getElementById('summary-address');
+                const summaryPayment = document.getElementById('summary-payment');
+                
+                // Update address summary
+                if (checkoutData.address) {
+                    const addr = checkoutData.address;
+                    summaryAddress.innerHTML = `
+                        ${addr.firstName} ${addr.lastName}<br>
+                        ${addr.address1}<br>
+                        ${addr.address2 ? addr.address2 + '<br>' : ''}
+                        ${addr.city}, ${addr.state} ${addr.pincode}<br>
+                        Mobile: ${addr.mobile}
+                    `;
+                }
+                
+                // Update payment summary
+                if (checkoutData.payment) {
+                    const paymentMethods = {
+                        'card': 'Credit/Debit Card',
+                        'upi': 'UPI',
+                        'netbanking': 'Net Banking',
+                        'cod': 'Cash on Delivery'
+                    };
+                    
+                    summaryPayment.textContent = paymentMethods[checkoutData.payment];
+                }
+            }
+
+            // Initialize payment options
+            setupPaymentOptions();
 
             initializeApp();
         });
