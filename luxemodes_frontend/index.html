@@ -9,22 +9,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .nav-link { position: relative; color: #374151; text-decoration: none; transition: color 0.3s; }
-        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 50%; background-color: #1a1a1a; transition: all 0.3s; }
-        .nav-link:hover { color: #1a1a1a; }
-        .nav-link:hover::after { width: 100%; left: 0; }
-        .product-card-info { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(5px); transform: translateY(100%); transition: transform 0.4s ease-in-out; }
-        .group:hover .product-card-info { transform: translateY(0); }
-        .cart-drawer { transition: transform 0.3s ease-in-out; }
-        .cart-open { transform: translateX(0); }
-        .cart-closed { transform: translateX(100%); }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <!-- Header & Navigation -->
     <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="text-2xl font-bold tracking-wider">LuxeModes</a>
@@ -43,7 +31,6 @@
                 </button>
             </div>
         </nav>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white/90 backdrop-blur-md">
             <a href="#home" class="block text-center py-2 px-4 text-sm hover:bg-gray-200">Home</a>
             <a href="#shop" class="block text-center py-2 px-4 text-sm hover:bg-gray-200">Shop</a>
@@ -51,9 +38,7 @@
         </div>
     </header>
 
-    <!-- Main Content -->
     <main>
-        <!-- Hero Section -->
         <section id="home" class="h-screen bg-cover bg-center flex items-center" style="background-image: url('https://placehold.co/1920x1080/d1d5db/1a1a1a?text=LuxeModes');">
             <div class="container mx-auto px-6 text-left">
                 <div class="bg-white/80 backdrop-blur-sm p-8 rounded-lg max-w-lg">
@@ -64,17 +49,14 @@
             </div>
         </section>
 
-        <!-- Shop Section -->
         <section id="shop" class="py-20">
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl font-bold text-center mb-12">Our Collection</h2>
                 <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Products will be dynamically inserted here by JavaScript -->
-                </div>
+                    </div>
             </div>
         </section>
 
-        <!-- About Section -->
         <section id="about" class="py-20 bg-white">
             <div class="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
                 <div class="md:w-1/2">
@@ -90,7 +72,6 @@
         </section>
     </main>
     
-    <!-- Footer -->
     <footer class="bg-gray-800 text-white py-12">
         <div class="container mx-auto px-6 text-center">
             <p>&copy; 2025 LuxeModes. All Rights Reserved.</p>
@@ -102,16 +83,14 @@
         </div>
     </footer>
 
-    <!-- Shopping Cart Drawer -->
     <div id="cart-drawer" class="cart-drawer fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 cart-closed">
         <div class="flex flex-col h-full">
             <div class="flex justify-between items-center p-6 border-b">
                 <h3 class="text-2xl font-bold">Your Cart</h3>
-                <button id="close-cart" class="hover:text-red-500 transition-colors">&times;</button>
+                <button id="close-cart" class="hover:text-red-500 transition-colors text-4xl leading-none">&times;</button>
             </div>
             <ul id="cart-items" class="flex-grow p-6 overflow-y-auto">
-                <!-- Cart items will be dynamically inserted here -->
-            </ul>
+                </ul>
             <div class="p-6 border-t bg-gray-50">
                 <div class="flex justify-between items-center mb-4">
                     <span class="text-lg font-semibold">Subtotal</span>
@@ -122,43 +101,32 @@
         </div>
     </div>
 
-    <!-- Product Modal -->
     <div id="product-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-4xl flex p-4 relative">
              <button id="close-modal" class="absolute top-4 right-4 text-2xl hover:text-red-500">&times;</button>
              <div id="modal-content" class="flex flex-col md:flex-row gap-8 w-full">
-                <!-- Modal content will be dynamically inserted here -->
-            </div>
+                </div>
         </div>
     </div>
 
-    <!-- Checkout Modal -->
     <div id="checkout-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4">
-        <div class="bg-white rounded-lg shadow-2xl w-full max-w-6xl max-h-[90vh] overflow-hidden relative">
-            <button id="close-checkout" class="absolute top-4 right-4 text-2xl hover:text-red-500 z-10">&times;</button>
-            
-            <!-- Checkout Steps Navigation -->
-            <div class="flex border-b bg-gray-50">
-                <div class="flex-1 px-6 py-4 text-center border-r">
-                    <div id="step-1-indicator" class="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-2 text-sm font-bold">1</div>
-                    <span class="text-sm font-medium">Address</span>
-                </div>
-                <div class="flex-1 px-6 py-4 text-center border-r">
-                    <div id="step-2-indicator" class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center mx-auto mb-2 text-sm font-bold">2</div>
-                    <span class="text-sm font-medium text-gray-600">Payment</span>
-                </div>
-                <div class="flex-1 px-6 py-4 text-center">
-                    <div id="step-3-indicator" class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center mx-auto mb-2 text-sm font-bold">3</div>
-                    <span class="text-sm font-medium text-gray-600">Summary</span>
-                </div>
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h3 class="text-xl font-bold">Checkout</h3>
+                <button id="close-checkout" class="text-2xl hover:text-red-500">&times;</button>
             </div>
-
-            <div class="flex h-96">
-                <!-- Left Panel - Forms -->
+            
+            <div class="flex-grow overflow-hidden flex">
                 <div class="flex-1 p-6 overflow-y-auto">
-                    <!-- Step 1: Address Form -->
+                    <div class="flex items-center justify-center mb-6">
+                        <div id="step-1-indicator" class="step-indicator active">1. Address</div>
+                        <div class="step-line"></div>
+                        <div id="step-2-indicator" class="step-indicator">2. Payment</div>
+                        <div class="step-line"></div>
+                        <div id="step-3-indicator" class="step-indicator">3. Summary</div>
+                    </div>
+
                     <div id="checkout-step-1" class="checkout-step">
-                        <h3 class="text-xl font-bold mb-6">Delivery Address</h3>
                         <form id="address-form" class="space-y-4">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
@@ -178,10 +146,6 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Address Line 1 *</label>
                                 <input type="text" name="address1" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
                             </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Address Line 2</label>
-                                <input type="text" name="address2" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
-                            </div>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">City *</label>
@@ -199,683 +163,35 @@
                             <button type="button" id="address-next" class="w-full bg-black text-white py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors">Continue to Payment</button>
                         </form>
                     </div>
-
-                    <!-- Step 2: Payment Form -->
                     <div id="checkout-step-2" class="checkout-step hidden">
-                        <h3 class="text-xl font-bold mb-6">Payment Method</h3>
                         <div class="space-y-4">
-                            <!-- Payment Options -->
-                            <div class="border border-gray-200 rounded-lg p-4 cursor-pointer payment-option" data-payment="card">
-                                <div class="flex items-center">
-                                    <input type="radio" name="payment" value="card" class="mr-3">
-                                    <i class="fas fa-credit-card text-xl mr-3"></i>
-                                    <div>
-                                        <div class="font-medium">Credit/Debit Card</div>
-                                        <div class="text-sm text-gray-600">Visa, MasterCard, RuPay</div>
-                                    </div>
-                                </div>
                             </div>
-                            <div class="border border-gray-200 rounded-lg p-4 cursor-pointer payment-option" data-payment="upi">
-                                <div class="flex items-center">
-                                    <input type="radio" name="payment" value="upi" class="mr-3">
-                                    <i class="fas fa-mobile-alt text-xl mr-3"></i>
-                                    <div>
-                                        <div class="font-medium">UPI</div>
-                                        <div class="text-sm text-gray-600">Google Pay, PhonePe, Paytm</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border border-gray-200 rounded-lg p-4 cursor-pointer payment-option" data-payment="netbanking">
-                                <div class="flex items-center">
-                                    <input type="radio" name="payment" value="netbanking" class="mr-3">
-                                    <i class="fas fa-university text-xl mr-3"></i>
-                                    <div>
-                                        <div class="font-medium">Net Banking</div>
-                                        <div class="text-sm text-gray-600">All major banks</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border border-gray-200 rounded-lg p-4 cursor-pointer payment-option" data-payment="cod">
-                                <div class="flex items-center">
-                                    <input type="radio" name="payment" value="cod" class="mr-3">
-                                    <i class="fas fa-money-bill-wave text-xl mr-3"></i>
-                                    <div>
-                                        <div class="font-medium">Cash on Delivery</div>
-                                        <div class="text-sm text-gray-600">Pay when you receive</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card Details (shown when card is selected) -->
-                        <div id="card-details" class="mt-6 hidden">
-                            <h4 class="font-medium mb-4">Card Details</h4>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Card Number *</label>
-                                    <input type="text" name="cardNumber" placeholder="1234 5678 9012 3456" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
-                                </div>
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Expiry Date *</label>
-                                        <input type="text" name="expiry" placeholder="MM/YY" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">CVV *</label>
-                                        <input type="text" name="cvv" placeholder="123" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Cardholder Name *</label>
-                                    <input type="text" name="cardholderName" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black">
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="flex gap-4 mt-6">
-                            <button type="button" id="payment-back" class="flex-1 bg-gray-300 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-400 transition-colors">Back</button>
-                            <button type="button" id="payment-next" class="flex-1 bg-black text-white py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors">Review Order</button>
+                            <button type="button" id="payment-back" class="flex-1 bg-gray-300 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-400">Back</button>
+                            <button type="button" id="payment-next" class="flex-1 bg-black text-white py-3 rounded-lg font-bold hover:bg-gray-800">Review Order</button>
                         </div>
                     </div>
-
-                    <!-- Step 3: Order Summary -->
                     <div id="checkout-step-3" class="checkout-step hidden">
-                        <h3 class="text-xl font-bold mb-6">Order Summary</h3>
-                        <div class="space-y-4">
-                            <div class="border border-gray-200 rounded-lg p-4">
-                                <h4 class="font-medium mb-2">Delivery Address</h4>
-                                <div id="summary-address" class="text-sm text-gray-600"></div>
-                            </div>
-                            <div class="border border-gray-200 rounded-lg p-4">
-                                <h4 class="font-medium mb-2">Payment Method</h4>
-                                <div id="summary-payment" class="text-sm text-gray-600"></div>
-                            </div>
-                        </div>
-                        <div class="flex gap-4 mt-6">
-                            <button type="button" id="summary-back" class="flex-1 bg-gray-300 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-400 transition-colors">Back</button>
-                            <button type="button" id="place-order" class="flex-1 bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700 transition-colors">Place Order</button>
+                         <div class="flex gap-4 mt-6">
+                            <button type="button" id="summary-back" class="flex-1 bg-gray-300 text-gray-700 py-3 rounded-lg font-bold hover:bg-gray-400">Back</button>
+                            <button type="button" id="place-order" class="flex-1 bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700">Place Order</button>
                         </div>
                     </div>
                 </div>
-
-                <!-- Right Panel - Order Summary -->
-                <div class="w-80 bg-gray-50 p-6 border-l">
+                <div class="w-80 bg-gray-50 p-6 border-l flex-shrink-0">
                     <h3 class="text-lg font-bold mb-4">Order Summary</h3>
-                    <div id="checkout-items" class="space-y-3 mb-4">
-                        <!-- Items will be dynamically inserted here -->
-                    </div>
+                    <div id="checkout-items" class="space-y-3 mb-4 max-h-60 overflow-y-auto"></div>
                     <div class="border-t pt-4 space-y-2">
-                        <div class="flex justify-between">
-                            <span>Subtotal</span>
-                            <span id="checkout-subtotal">$0.00</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span>Delivery</span>
-                            <span class="text-green-600">FREE</span>
-                        </div>
-                        <div class="flex justify-between font-bold text-lg border-t pt-2">
-                            <span>Total</span>
-                            <span id="checkout-total">$0.00</span>
-                        </div>
+                        <div class="flex justify-between"><span>Subtotal</span><span id="checkout-subtotal">$0.00</span></div>
+                        <div class="flex justify-between"><span>Delivery</span><span class="text-green-600">FREE</span></div>
+                        <div class="flex justify-between font-bold text-lg border-t pt-2 mt-2"><span>Total</span><span id="checkout-total">$0.00</span></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript Logic -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- Application State ---
-            const state = {
-                products: [], cart: [], isCartOpen: false, isModalOpen: false, selectedProduct: null
-            };
 
-            // --- THIS IS THE CONNECTION POINT ---
-            // This URL points directly to your backend server.
-<<<<<<< HEAD
-            const API_BASE_URL = 'http://localhost:3000';
-=======
-            const API_BASE_URL = 'https://luxemodes.onrender.com';
->>>>>>> 3ddbc0d563e3ee8d16fe0c48ba05e82c111d4ede
-
-            // --- DOM Element Selectors ---
-            const productGrid = document.getElementById('product-grid');
-            const cartButton = document.getElementById('cart-button');
-            const cartDrawer = document.getElementById('cart-drawer');
-            const closeCartButton = document.getElementById('close-cart');
-            const cartItemsContainer = document.getElementById('cart-items');
-            const subtotalElement = document.getElementById('subtotal');
-            const cartCountElement = document.getElementById('cart-count');
-            const productModal = document.getElementById('product-modal');
-            const closeModalButton = document.getElementById('close-modal');
-            const modalContent = document.getElementById('modal-content');
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            // --- Fallback Data ---
-            // This data is used if the backend server cannot be reached.
-            const fallbackProducts = [
-                { id: 1, name: "Classic Crewneck Tee (Fallback)", price: 35.00, image: "https://placehold.co/600x600/f0f0f0/1a1a1a?text=Tee", category: "Tops", description: "This is fallback data. Start the backend server to see live product information.", colors: ["Black", "White"], sizes: ["S", "M", "L"] },
-                { id: 2, name: "Denim Jacket (Fallback)", price: 120.00, image: "https://placehold.co/600x600/e0e0e0/1a1a1a?text=Jacket", category: "Outerwear", description: "This is fallback data. Start the backend server to see live product information.", colors: ["Vintage Blue"], sizes: ["S", "M", "L"] },
-                { id: 3, name: "Slim-Fit Chinos (Fallback)", price: 75.00, image: "https://placehold.co/600x600/f5f5f5/1a1a1a?text=Chinos", category: "Bottoms", description: "This is fallback data. Start the backend server to see live product information.", colors: ["Khaki", "Navy"], sizes: ["30x30", "32x32"] },
-                { id: 4, name: "Merino Sweater (Fallback)", price: 95.00, image: "https://placehold.co/600x600/fafafa/1a1a1a?text=Sweater", category: "Tops", description: "This is fallback data. Start the backend server to see live product information.", colors: ["Charcoal"], sizes: ["M", "L", "XL"] },
-                { id: 7, name: "Performance Gym Fit (Fallback)", price: 65.00, image: "https://placehold.co/600x600/2c2c2c/ffffff?text=Gym+Fit", category: "Athletic", description: "This is fallback data. Start the backend server to see live product information.", colors: ["Black", "Navy"], sizes: ["S", "M", "L"] },
-            ];
-
-            // --- Data Fetching ---
-            async function fetchProducts() {
-                try {
-                    // It fetches the specific route you defined in products.js
-                    const response = await fetch(`${API_BASE_URL}/api/products`);
-                    if (!response.ok) throw new Error(`Network response was not ok: ${response.statusText}`);
-                    
-                    // If the fetch is successful, remove any old error messages
-                    const existingError = document.getElementById('fetch-error');
-                    if (existingError) existingError.remove();
-                    
-                    return await response.json();
-                } catch (error) {
-                    console.error("--- FETCH FAILED ---");
-                    console.error("Could not connect to the backend server. Please ensure the server is running on https://luxemodes.onrender.com.");
-                    console.error("Displaying fallback data for demonstration purposes.", error);
-                    
-                    const shopSection = document.getElementById('shop');
-                    // Add a more detailed, instructional error message to the page
-                    if (!document.getElementById('fetch-error')) {
-                         const errorHTML = `
-                            <div id="fetch-error" class="container mx-auto px-6 mb-8 text-left bg-red-100 border-l-4 border-red-500 text-red-800 p-4" role="alert">
-                                <p class="font-bold text-lg">Backend Not Connected</p>
-                                <p>The website couldn't connect to the deployed backend at <strong>https://luxemodes.onrender.com</strong>. This could be due to:</p>
-                                <ul class="list-disc list-inside mt-2 text-sm">
-                                    <li>The backend service is temporarily unavailable</li>
-                                    <li>Network connectivity issues</li>
-                                    <li>The backend URL has changed</li>
-                                </ul>
-                                <p class="mt-2">The page is currently showing static fallback data. Please <strong>refresh this page</strong> or check back later.</p>
-                            </div>`;
-                         shopSection.insertAdjacentHTML('afterbegin', errorHTML);
-                    }
-
-                    return fallbackProducts;
-                }
-            }
-
-            // --- Rendering Functions (No changes here) ---
-            function renderProducts() {
-                productGrid.innerHTML = '';
-                state.products.forEach(product => {
-                    const productCard = document.createElement('div');
-                    productCard.className = 'product-card bg-white rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 cursor-pointer group';
-                    productCard.dataset.id = product.id;
-                    productCard.innerHTML = `
-                        <div class="relative">
-                            <img src="${product.image}" alt="${product.name}" class="w-full h-96 object-cover">
-                            <div class="absolute bottom-0 left-0 right-0 p-4 product-card-info">
-                                <h3 class="font-bold text-lg">${product.name}</h3>
-                                <p class="text-gray-600">$${product.price.toFixed(2)}</p>
-                            </div>
-                        </div>
-                    `;
-                    productGrid.appendChild(productCard);
-                });
-            }
-
-            function renderCartItems() {
-                cartItemsContainer.innerHTML = '';
-                if (state.cart.length === 0) {
-                    cartItemsContainer.innerHTML = '<li><p class="text-gray-500">Your cart is empty.</p></li>';
-                    subtotalElement.textContent = '$0.00';
-                    return;
-                }
-                let subtotal = 0;
-                state.cart.forEach(item => {
-                    const li = document.createElement('li');
-                    li.className = 'flex items-center justify-between py-4 border-b';
-                    li.innerHTML = `
-                        <div class="flex items-center">
-                            <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-md mr-4">
-                            <div>
-                                <h4 class="font-semibold">${item.name}</h4>
-                                <p class="text-sm text-gray-500">${item.size} / ${item.color}</p>
-                                <p class="text-lg font-bold text-gray-800">$${(item.price * item.quantity).toFixed(2)}</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3">
-                             <input type="number" min="1" value="${item.quantity}" data-id="${item.id}" data-size="${item.size}" data-color="${item.color}" class="quantity-input w-14 text-center border rounded-md p-1">
-                             <button data-id="${item.id}" data-size="${item.size}" data-color="${item.color}" class="remove-item-btn text-gray-500 hover:text-red-600 text-2xl font-bold">&times;</button>
-                        </div>
-                    `;
-                    cartItemsContainer.appendChild(li);
-                    subtotal += item.price * item.quantity;
-                });
-                subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
-            }
-            
-            function renderProductModal() {
-                const product = state.selectedProduct;
-                if (!product) return;
-                modalContent.innerHTML = `
-                    <div class="md:w-1/2">
-                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover rounded-lg">
-                    </div>
-                    <div class="md:w-1/2 flex flex-col justify-center p-4">
-                        <h2 class="text-3xl font-bold mb-2">${product.name}</h2>
-                        <p class="text-2xl text-gray-800 mb-4">$${product.price.toFixed(2)}</p>
-                        <p class="text-gray-600 mb-6">${product.description}</p>
-                        <div class="flex gap-4 mb-6">
-                            <div class="flex-1">
-                                <label for="size-select" class="block text-sm font-medium text-gray-700">Size</label>
-                                <select id="size-select" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                    ${product.sizes.map(size => `<option>${size}</option>`).join('')}
-                                </select>
-                            </div>
-                            <div class="flex-1">
-                                <label for="color-select" class="block text-sm font-medium text-gray-700">Color</label>
-                                <select id="color-select" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                     ${product.colors.map(color => `<option>${color}</option>`).join('')}
-                                </select>
-                            </div>
-                        </div>
-                        <button id="add-to-cart-btn" class="w-full bg-black text-white py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors">Add to Cart</button>
-                    </div>
-                `;
-            }
-
-            // --- State Management & Logic (No changes here) ---
-            const updateCart = () => {
-                renderCartItems();
-                const totalItems = state.cart.reduce((sum, item) => sum + item.quantity, 0);
-                cartCountElement.textContent = totalItems;
-                cartCountElement.classList.toggle('hidden', totalItems === 0);
-                localStorage.setItem('luxeModesCart', JSON.stringify(state.cart));
-            };
-
-            const toggleCart = () => {
-                state.isCartOpen = !state.isCartOpen;
-                cartDrawer.classList.toggle('cart-open', state.isCartOpen);
-                cartDrawer.classList.toggle('cart-closed', !state.isCartOpen);
-            };
-
-            const toggleModal = () => {
-                state.isModalOpen = !state.isModalOpen;
-                productModal.classList.toggle('hidden', !state.isModalOpen);
-                productModal.classList.toggle('flex', state.isModalOpen);
-            };
-
-            const openProductModal = (product) => {
-                state.selectedProduct = product;
-                renderProductModal();
-                toggleModal();
-            };
-            
-            const addToCart = (productId, size, color) => {
-                const product = state.products.find(p => p.id === productId);
-                const existingItem = state.cart.find(item => item.id === productId && item.size === size && item.color === color);
-
-                if (existingItem) {
-                    existingItem.quantity++;
-                } else {
-                    state.cart.push({ ...product, quantity: 1, size, color });
-                }
-                updateCart();
-            };
-
-            const removeFromCart = (productId, size, color) => {
-                state.cart = state.cart.filter(item => !(item.id === productId && item.size === size && item.color === color));
-                updateCart();
-            };
-            
-            const updateItemQuantity = (productId, size, color, newQuantity) => {
-                const item = state.cart.find(i => i.id === productId && i.size === size && i.color === color);
-                if (item) {
-                    item.quantity = newQuantity > 0 ? newQuantity : 1;
-                }
-                updateCart();
-            };
-
-            // --- Initialization ---
-            async function initializeApp() {
-                const savedCart = localStorage.getItem('luxeModesCart');
-                if (savedCart) state.cart = JSON.parse(savedCart);
-                
-                state.products = await fetchProducts();
-                renderProducts();
-                updateCart();
-
-                // Setup Event Listeners
-                cartButton.addEventListener('click', toggleCart);
-                closeCartButton.addEventListener('click', toggleCart);
-                closeModalButton.addEventListener('click', toggleModal);
-                mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-                
-                productGrid.addEventListener('click', e => {
-                    const card = e.target.closest('.product-card');
-                    if (card) {
-                        const product = state.products.find(p => p.id === parseInt(card.dataset.id));
-                        if (product) openProductModal(product);
-                    }
-                });
-
-                modalContent.addEventListener('click', e => {
-                    if (e.target.id === 'add-to-cart-btn') {
-                        const { id } = state.selectedProduct;
-                        const size = document.getElementById('size-select').value;
-                        const color = document.getElementById('color-select').value;
-                        addToCart(id, size, color);
-                        toggleModal();
-                    }
-                });
-
-                cartItemsContainer.addEventListener('click', e => {
-                    if (e.target.classList.contains('remove-item-btn')) {
-                        const { id, size, color } = e.target.dataset;
-                        removeFromCart(parseInt(id), size, color);
-                    }
-                });
-
-                cartItemsContainer.addEventListener('change', e => {
-                     if (e.target.classList.contains('quantity-input')) {
-                        const { id, size, color } = e.target.dataset;
-                        const newQuantity = parseInt(e.target.value);
-                        updateItemQuantity(parseInt(id), size, color, newQuantity);
-                    }
-                });
-            }
-
-            // --- Checkout Functionality ---
-            let currentCheckoutStep = 1;
-            let checkoutData = {};
-
-            const checkoutModal = document.getElementById('checkout-modal');
-            const closeCheckoutBtn = document.getElementById('close-checkout');
-            const checkoutBtn = document.getElementById('checkout-btn');
-
-            // Checkout step management
-            function showCheckoutStep(step) {
-                // Hide all steps
-                document.querySelectorAll('.checkout-step').forEach(s => s.classList.add('hidden'));
-                
-                // Show current step
-                document.getElementById(`checkout-step-${step}`).classList.remove('hidden');
-                
-                // Update step indicators
-                for (let i = 1; i <= 3; i++) {
-                    const indicator = document.getElementById(`step-${i}-indicator`);
-                    const label = indicator.nextElementSibling;
-                    
-                    if (i <= step) {
-                        indicator.className = 'w-8 h-8 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-2 text-sm font-bold';
-                        label.className = 'text-sm font-medium';
-                    } else {
-                        indicator.className = 'w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center mx-auto mb-2 text-sm font-bold';
-                        label.className = 'text-sm font-medium text-gray-600';
-                    }
-                }
-                
-                currentCheckoutStep = step;
-            }
-
-            // Toggle checkout modal
-            function toggleCheckoutModal() {
-                checkoutModal.classList.toggle('hidden');
-                checkoutModal.classList.toggle('flex');
-                
-                if (!checkoutModal.classList.contains('hidden')) {
-                    // Initialize checkout
-                    currentCheckoutStep = 1;
-                    showCheckoutStep(1);
-                    updateCheckoutSummary();
-                }
-            }
-
-            // Update checkout summary
-            function updateCheckoutSummary() {
-                const checkoutItems = document.getElementById('checkout-items');
-                const checkoutSubtotal = document.getElementById('checkout-subtotal');
-                const checkoutTotal = document.getElementById('checkout-total');
-                
-                checkoutItems.innerHTML = '';
-                let subtotal = 0;
-                
-                state.cart.forEach(item => {
-                    subtotal += item.price * item.quantity;
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = 'flex justify-between items-center text-sm';
-                    itemDiv.innerHTML = `
-                        <div>
-                            <div class="font-medium">${item.name}</div>
-                            <div class="text-gray-600">${item.size} / ${item.color} × ${item.quantity}</div>
-                        </div>
-                        <div class="font-medium">$${(item.price * item.quantity).toFixed(2)}</div>
-                    `;
-                    checkoutItems.appendChild(itemDiv);
-                });
-                
-                checkoutSubtotal.textContent = `$${subtotal.toFixed(2)}`;
-                checkoutTotal.textContent = `$${subtotal.toFixed(2)}`;
-            }
-
-            // Address form validation
-            function validateAddressForm() {
-                const form = document.getElementById('address-form');
-                const inputs = form.querySelectorAll('input[required]');
-                let isValid = true;
-                
-                inputs.forEach(input => {
-                    if (!input.value.trim()) {
-                        isValid = false;
-                        input.classList.add('border-red-500');
-                    } else {
-                        input.classList.remove('border-red-500');
-                    }
-                });
-                
-                return isValid;
-            }
-
-            // Payment option selection
-            function setupPaymentOptions() {
-                const paymentOptions = document.querySelectorAll('.payment-option');
-                const cardDetails = document.getElementById('card-details');
-                
-                paymentOptions.forEach(option => {
-                    option.addEventListener('click', () => {
-                        // Uncheck all radio buttons
-                        document.querySelectorAll('input[name="payment"]').forEach(radio => {
-                            radio.checked = false;
-                        });
-                        
-                        // Check the clicked option's radio button
-                        const radio = option.querySelector('input[name="payment"]');
-                        radio.checked = true;
-                        
-                        // Show/hide card details based on selection
-                        if (radio.value === 'card') {
-                            cardDetails.classList.remove('hidden');
-                        } else {
-                            cardDetails.classList.add('hidden');
-                        }
-                        
-                        // Visual feedback
-                        paymentOptions.forEach(opt => opt.classList.remove('border-black', 'bg-gray-50'));
-                        option.classList.add('border-black', 'bg-gray-50');
-                    });
-                });
-            }
-
-            // Event listeners for checkout
-            checkoutBtn.addEventListener('click', () => {
-                if (state.cart.length === 0) {
-                    alert('Your cart is empty!');
-                    return;
-                }
-                toggleCart(); // Close cart first
-                toggleCheckoutModal();
-            });
-
-            closeCheckoutBtn.addEventListener('click', toggleCheckoutModal);
-
-            // Address form next button
-            document.getElementById('address-next').addEventListener('click', () => {
-                if (validateAddressForm()) {
-                    // Store address data
-                    const formData = new FormData(document.getElementById('address-form'));
-                    checkoutData.address = Object.fromEntries(formData);
-                    showCheckoutStep(2);
-                } else {
-                    alert('Please fill in all required fields.');
-                }
-            });
-
-            // Payment back button
-            document.getElementById('payment-back').addEventListener('click', () => {
-                showCheckoutStep(1);
-            });
-
-            // Payment next button
-            document.getElementById('payment-next').addEventListener('click', () => {
-                const selectedPayment = document.querySelector('input[name="payment"]:checked');
-                if (!selectedPayment) {
-                    alert('Please select a payment method.');
-                    return;
-                }
-                
-                // Store payment data
-                checkoutData.payment = selectedPayment.value;
-                
-                if (selectedPayment.value === 'card') {
-                    // Validate card details
-                    const cardNumber = document.querySelector('input[name="cardNumber"]').value;
-                    const expiry = document.querySelector('input[name="expiry"]').value;
-                    const cvv = document.querySelector('input[name="cvv"]').value;
-                    const cardholderName = document.querySelector('input[name="cardholderName"]').value;
-                    
-                    if (!cardNumber || !expiry || !cvv || !cardholderName) {
-                        alert('Please fill in all card details.');
-                        return;
-                    }
-                    
-                    checkoutData.cardDetails = { cardNumber, expiry, cvv, cardholderName };
-                }
-                
-                // Update summary
-                updateOrderSummary();
-                showCheckoutStep(3);
-            });
-
-            // Summary back button
-            document.getElementById('summary-back').addEventListener('click', () => {
-                showCheckoutStep(2);
-            });
-
-            // Place order button
-            document.getElementById('place-order').addEventListener('click', async () => {
-                try {
-                    // Prepare order data
-                    const orderData = {
-                        customer: {
-                            firstName: checkoutData.address.firstName,
-                            lastName: checkoutData.address.lastName,
-                            mobile: checkoutData.address.mobile
-                        },
-                        address: {
-                            address1: checkoutData.address.address1,
-                            address2: checkoutData.address.address2 || '',
-                            city: checkoutData.address.city,
-                            state: checkoutData.address.state,
-                            pincode: checkoutData.address.pincode
-                        },
-                        items: state.cart.map(item => ({
-                            productId: item.id,
-                            name: item.name,
-                            price: item.price,
-                            quantity: item.quantity,
-                            size: item.size,
-                            color: item.color,
-                            image: item.image
-                        })),
-                        payment: {
-                            method: checkoutData.payment,
-                            status: 'pending',
-                            cardDetails: checkoutData.cardDetails || null
-                        },
-                        pricing: {
-                            subtotal: state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-                            delivery: 0,
-                            total: state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)
-                        }
-                    };
-
-                    // Send order to backend
-                    const response = await fetch(`${API_BASE_URL}/api/orders`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(orderData)
-                    });
-
-                    const result = await response.json();
-
-                    if (result.success) {
-                        // Order placed successfully
-                        alert(`Order placed successfully! Order ID: #${result.orderId}`);
-                        
-                        // Clear cart
-                        state.cart = [];
-                        updateCart();
-                        
-                        // Close checkout modal
-                        toggleCheckoutModal();
-                        
-                        // Reset checkout data
-                        checkoutData = {};
-                    } else {
-                        throw new Error(result.message || 'Failed to place order');
-                    }
-                } catch (error) {
-                    console.error('Error placing order:', error);
-                    alert('Failed to place order. Please try again.');
-                }
-            });
-
-            // Update order summary for final step
-            function updateOrderSummary() {
-                const summaryAddress = document.getElementById('summary-address');
-                const summaryPayment = document.getElementById('summary-payment');
-                
-                // Update address summary
-                if (checkoutData.address) {
-                    const addr = checkoutData.address;
-                    summaryAddress.innerHTML = `
-                        ${addr.firstName} ${addr.lastName}<br>
-                        ${addr.address1}<br>
-                        ${addr.address2 ? addr.address2 + '<br>' : ''}
-                        ${addr.city}, ${addr.state} ${addr.pincode}<br>
-                        Mobile: ${addr.mobile}
-                    `;
-                }
-                
-                // Update payment summary
-                if (checkoutData.payment) {
-                    const paymentMethods = {
-                        'card': 'Credit/Debit Card',
-                        'upi': 'UPI',
-                        'netbanking': 'Net Banking',
-                        'cod': 'Cash on Delivery'
-                    };
-                    
-                    summaryPayment.textContent = paymentMethods[checkoutData.payment];
-                }
-            }
-
-            // Initialize payment options
-            setupPaymentOptions();
-
-            initializeApp();
-        });
-    </script>
+    <script src="js/main.js" defer></script>
 </body>
 </html>
-

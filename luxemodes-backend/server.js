@@ -1,70 +1,44 @@
 // Import necessary packages
-const express = require('express');
-const cors = require('cors');
-const connectDB = require('./config/database');
+import express from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import connectDB from './config/db.js';
+import productRoutes from './routes/products.js';
+import orderRoutes from './routes/orders.js';
 
-// Load environment variables
-require('dotenv').config();
+// --- Initial Configuration ---
+// Load environment variables from .env file
+dotenv.config();
 
-// Create an Express application
+// Connect to the MongoDB database
+connectDB();
+
+// Initialize the Express application
 const app = express();
-const PORT = process.env.PORT || 3000; // The port the server will run on
+const PORT = process.env.PORT || 3000;
 
-// Middleware
-// Enable Cross-Origin Resource Sharing (CORS) so your frontend can communicate with this backend
-app.use(cors({
-  origin: [
-    'https://transcendent-bubblegum-74b190.netlify.app',
-    'http://localhost:3000',
-    'http://localhost:8080',
-    'http://127.0.0.1:5500'
-  ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true,
-  optionsSuccessStatus: 200
-})); 
-// Enable the server to parse JSON formatted request bodies
-app.use(express.json()); 
+// --- Middleware ---
+// 1. CORS (Cross-Origin Resource Sharing)
+// This is crucial for security. It allows your Netlify frontend 
+// to make requests to this backend server on Render.
+app.use(cors());
+
+// 2. JSON Body Parser
+// This allows the server to accept and parse JSON data in request bodies.
+app.use(express.json());
+
 
 // --- API Routes ---
-// Import the product routes
-const productRoutes = require('./routes/products');
-const orderRoutes = require('./routes/orders');
-const adminRoutes = require('./routes/admin');
-
-// Use the product routes for any request to '/api/products'
+// The server will use the imported route handlers for specific API paths.
+// Any request starting with '/api/products' will be handled by productRoutes.
 app.use('/api/products', productRoutes);
-// Use the order routes for any request to '/api/orders'
+
+// Any request starting with '/api/orders' will be handled by orderRoutes.
 app.use('/api/orders', orderRoutes);
-// Use the admin routes for any request to '/api/admin'
-app.use('/api/admin', adminRoutes);
 
 
-// A simple root route to confirm the server is running
-app.get('/', (req, res) => {
-  res.send('LuxeModes Backend Server is running!');
+// --- Server Listener ---
+// Starts the server and listens for incoming requests on the specified port.
+app.listen(PORT, () => {
+  console.log(`Server is running successfully on http://localhost:${PORT}`);
 });
-
-// Connect to MongoDB and start the server
-const startServer = async () => {
-  try {
-    // Start the server first
-    app.listen(PORT, () => {
-      console.log(`Server is listening on http://localhost:${PORT}`);
-      console.log('Server started successfully');
-    });
-    
-    // Try to connect to MongoDB (non-blocking)
-    const dbConnected = await connectDB();
-    if (dbConnected) {
-      console.log('✅ MongoDB connected successfully - All features available');
-    } else {
-      console.log('⚠️  Running without database - Products API works, Orders API disabled');
-    }
-  } catch (error) {
-    console.error('Failed to start server:', error);
-    process.exit(1);
-  }
-};
-
-startServer();
